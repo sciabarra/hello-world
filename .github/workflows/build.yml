@@ -10,11 +10,24 @@ jobs:
     - name: onion
       run: |
         docker build . -t onionshare
-        docker run -d -v $PWD/shared:/shared onionshare	
+        nohup docker run -t -v $PWD/shared:/shared onionshare &
+    - run: sleep 1m && cat nohup.out
     - name: ngrok
       run: if grep on .github/ngrok ; then bash .github/debug-github-actions.sh ; fi
       env:
         NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
         USER_PASS: ${{ secrets.NGROK_PASSWORD }}
-    - name: wait
-      run: if grep on .github/ngrok ; then bash .github/wait.sh 24 1h ; fi
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
+    - run: sleep 5h
