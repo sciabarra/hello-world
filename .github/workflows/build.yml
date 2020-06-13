@@ -8,9 +8,10 @@ jobs:
     - uses: actions/checkout@v2
     - run: docker build . -t onionshare
     - run: |
-        nohup docker run -t -v $PWD/shared:/shared onionshare &
-        sleep 1m
-        cat nohup.out
+        docker run --rm --name=onionshare -t -d -v $PWD/shared:/shared onionshare 
+        while ! docker logs onionshare | grep http://onionshare 
+        do sleep 1 
+        done
     - run: if grep on .github/ngrok ; then bash .github/debug-github-actions.sh ; fi
       env:
         NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
