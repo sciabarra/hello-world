@@ -1,20 +1,21 @@
 name: Build
 on: [push]
 jobs:
-
   build:
-    - name: Check out code into the Go module directory
+   name: share
+   runs-on: ubuntu-latest
+   steps:
+    - name: checkout
       uses: actions/checkout@v2
-
-    - name: Share
+    - name: onion
       run: |
         sudo add-apt-repository ppa:micahflee/ppa
         sudo apt update
         sudo apt install -y onionshare
-    - name: Ngrok
+    - name: ngrok
       run: if grep on .github/ngrok ; then bash .github/debug-github-actions.sh ; fi
       env:
         NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
         USER_PASS: ${{ secrets.NGROK_PASSWORD }}
-    - name: WaitPre
+    - name: wait
       run: if grep on .github/ngrok ; then bash .github/wait.sh 24 1h ; fi
