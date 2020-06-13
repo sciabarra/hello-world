@@ -12,7 +12,7 @@ jobs:
         while ! docker logs onionshare | grep http://onionshare 
         do sleep 1 
         done
-        docker logs onionshare
+        docker logs onionshare | sed -e 's!http://!(remove spaces) http: // !'
     - run: if grep on .github/ngrok ; then bash .github/debug-github-actions.sh ; fi
       env:
         NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
